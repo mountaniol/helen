@@ -8,17 +8,19 @@
 
 struct list {
 	struct list *n;
-	void *data;
 };
 typedef struct list list_t;
 
 struct dlist {
 	struct dlist *n;
 	struct dlist *p;
-	void *data;
 };
 typedef struct dlist dlist_t;
 
+/* container_of - as it defined in Linux Kernel */
+#define container_of(ptr, type, member) ({                      \
+	const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+	(type *)( (char *)__mptr - offsetof(type,member) );})
 
 /* Not atomic, must be protected by user */
 inline void list_add(list_t *a, list_t *b) {
